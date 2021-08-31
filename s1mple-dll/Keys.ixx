@@ -13,44 +13,42 @@ export struct Key
 
 namespace Keys
 {
-#define DEFINE_KEY(name, vk)\
-    export constexpr Key name { .vKey = vk, .description = #name }
-#define DEFINE_KEY_SHORT(name)\
-    DEFINE_KEY(name, VK_##name)
+    // Since VS2022 C++20 IntelliSense is broken, don't define this using macros!
 
-    export constexpr Key Null{ .vKey = 0, .description = std::string_view() };
-
-    DEFINE_KEY(Mouse1, VK_LBUTTON);
-    DEFINE_KEY(Mouse2, VK_RBUTTON);
-    DEFINE_KEY(Mouse3, VK_MBUTTON);
-    DEFINE_KEY(Mouse4, VK_XBUTTON2);
-    DEFINE_KEY(Mouse5, VK_XBUTTON1);
-
-    DEFINE_KEY(Minus, VK_OEM_MINUS);
-    DEFINE_KEY(Plus, VK_OEM_PLUS);
-    DEFINE_KEY(Tilde, VK_OEM_3);
-
-    DEFINE_KEY(Insert, VK_INSERT);
-    DEFINE_KEY(Delete, VK_DELETE);
-    DEFINE_KEY(Home, VK_HOME);
-    DEFINE_KEY(End, VK_END);
-    DEFINE_KEY(PageUp, VK_PRIOR);
-    DEFINE_KEY(PageDown, VK_NEXT);
-
-    DEFINE_KEY_SHORT(F1);
-    DEFINE_KEY_SHORT(F2);
-    DEFINE_KEY_SHORT(F3);
-    DEFINE_KEY_SHORT(F4);
-    DEFINE_KEY_SHORT(F5);
-    DEFINE_KEY_SHORT(F6);
-    DEFINE_KEY_SHORT(F7);
-    DEFINE_KEY_SHORT(F8);
-    DEFINE_KEY_SHORT(F9);
-    DEFINE_KEY_SHORT(F10);
-    DEFINE_KEY_SHORT(F11);
-    DEFINE_KEY_SHORT(F12);
-
-    export std::optional<Key> from_string(const std::string& str)
+    export 
+        extern // 'extern' is redundant here according to cppreference (and the compiler), but IntelliSense says otherwise.
+        constexpr Key 
+        Mouse1{ .vKey = VK_LBUTTON, .description = "Mouse1" },
+        Mouse2{ .vKey = VK_RBUTTON, .description = "Mouse2" },
+        Mouse3{ .vKey = VK_MBUTTON, .description = "Mouse3" },
+        Mouse4{ .vKey = VK_XBUTTON2, .description = "Mouse4" },
+        Mouse5{ .vKey = VK_XBUTTON1, .description = "Mouse5" },
+        
+        Minus{ .vKey = VK_OEM_MINUS, .description = "Minus" },
+        Plus{ .vKey = VK_OEM_PLUS, .description = "Plus" },
+        Tilde{ .vKey = VK_OEM_3, .description = "Tilde" },
+        
+        Insert{ .vKey = VK_INSERT, .description = "Insert" },
+        Delete{ .vKey = VK_DELETE, .description = "Delete" },
+        Home{ .vKey = VK_HOME, .description = "Home" },
+        End{ .vKey = VK_END, .description = "End" },
+        PageUp{ .vKey = VK_PRIOR, .description = "PageUp" },
+        PageDown{ .vKey = VK_NEXT, .description = "PageDown" },
+        
+        F1{ .vKey = VK_F1, .description = "F1" },
+        F2{ .vKey = VK_F2, .description = "F2" },
+        F3{ .vKey = VK_F3, .description = "F3" },
+        F4{ .vKey = VK_F4, .description = "F4" },
+        F5{ .vKey = VK_F5, .description = "F5" },
+        F6{ .vKey = VK_F6, .description = "F6" },
+        F7{ .vKey = VK_F7, .description = "F7" },
+        F8{ .vKey = VK_F8, .description = "F8" },
+        F9{ .vKey = VK_F9, .description = "F9" },
+        F10{ .vKey = VK_F10, .description = "F10" },
+        F11{ .vKey = VK_F11, .description = "F11" },
+        F12{ .vKey = VK_F12, .description = "F12" };
+    
+    export constexpr std::optional<Key> from_string(std::string_view str)
     {
 #define CHECK_KEY(name)\
         if (#name == str)\
@@ -81,6 +79,8 @@ namespace Keys
         CHECK_KEY(F9);
         CHECK_KEY(F10);
         CHECK_KEY(F11);
-        return F12;
+        CHECK_KEY(F12);
+
+        return {};
     }
 }
