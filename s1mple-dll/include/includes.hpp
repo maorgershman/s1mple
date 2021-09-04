@@ -28,6 +28,7 @@
 #else
 
 #define PRINT(x)
+#define WPRINT(x)
 
 #endif // _DEBUG
 

@@ -13,39 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\nlohmann">
-      <UniqueIdentifier>{b78a6499-81ff-4c22-90ac-326344763303}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Modules">
-      <UniqueIdentifier>{00e279cb-ac37-4aa7-a6c5-eff3277d45ca}</UniqueIdentifier>
+      <UniqueIdentifier>{202017fd-8c61-4443-af6a-aaed7315b4bf}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Keepalive.ixx">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Keys.ixx">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.ixx">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Config.ixx">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="nlohmann\json.hpp">
-      <Filter>Header Files\nlohmann</Filter>
-    </ClInclude>
-    <ClInclude Include="includes.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <Filter Include="Header Files\nlohmann">
+      <UniqueIdentifier>{1277f259-459a-4c56-a2a8-e7ad455adbf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\Config.ixx">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\Keepalive.ixx">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\Keys.ixx">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\Utils.ixx">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\includes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nlohmann\json.hpp">
+      <Filter>Header Files\nlohmann</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
