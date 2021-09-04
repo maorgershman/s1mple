@@ -1,58 +1,88 @@
 export module Keys;
 
+export enum class VirtualKey : int
+{
+    Mouse1 = VK_LBUTTON,
+    Mouse2 = VK_RBUTTON,
+    Mouse3 = VK_MBUTTON,
+    Mouse4 = VK_XBUTTON2,
+    Mouse5 = VK_XBUTTON1,
+    Minus = VK_OEM_MINUS,
+    Plus = VK_OEM_PLUS,
+    Tilde = VK_OEM_3,
+    Insert = VK_INSERT,
+    Delete = VK_DELETE,
+    Home = VK_HOME,
+    End = VK_END,
+    PageUp = VK_PRIOR,
+    PageDown = VK_NEXT,
+    F1 = VK_F1,
+    F2 = VK_F2,
+    F3 = VK_F3,
+    F4 = VK_F4,
+    F5 = VK_F5,
+    F6 = VK_F6,
+    F7 = VK_F7,
+    F8 = VK_F8,
+    F9 = VK_F9,
+    F10 = VK_F10,
+    F11 = VK_F11,
+    F12 = VK_F12,
+};
+
 export struct Key
 {
-    const int vKey;
+    const VirtualKey vKey;
     const std::string_view description;
 
     bool is_currently_pressed() const
     { 
-        return GetAsyncKeyState(vKey); 
+        return GetAsyncKeyState(static_cast<int>(vKey)); 
+    }
+
+    Key operator=(const Key& key) 
+    {
+        return Key(key);
     }
 };
 
 namespace Keys
 {
-    // Since VS2022 C++20 IntelliSense is broken, don't define this using macros!
+#define DEFINE_KEY(x) export constexpr Key x { .vKey = VirtualKey::x, .description = #x }
 
-    export 
-        extern // 'extern' is redundant here according to cppreference (and the compiler), but IntelliSense says otherwise.
-        constexpr Key 
-        Mouse1{ .vKey = VK_LBUTTON, .description = "Mouse1" },
-        Mouse2{ .vKey = VK_RBUTTON, .description = "Mouse2" },
-        Mouse3{ .vKey = VK_MBUTTON, .description = "Mouse3" },
-        Mouse4{ .vKey = VK_XBUTTON2, .description = "Mouse4" },
-        Mouse5{ .vKey = VK_XBUTTON1, .description = "Mouse5" },
-        
-        Minus{ .vKey = VK_OEM_MINUS, .description = "Minus" },
-        Plus{ .vKey = VK_OEM_PLUS, .description = "Plus" },
-        Tilde{ .vKey = VK_OEM_3, .description = "Tilde" },
-        
-        Insert{ .vKey = VK_INSERT, .description = "Insert" },
-        Delete{ .vKey = VK_DELETE, .description = "Delete" },
-        Home{ .vKey = VK_HOME, .description = "Home" },
-        End{ .vKey = VK_END, .description = "End" },
-        PageUp{ .vKey = VK_PRIOR, .description = "PageUp" },
-        PageDown{ .vKey = VK_NEXT, .description = "PageDown" },
-        
-        F1{ .vKey = VK_F1, .description = "F1" },
-        F2{ .vKey = VK_F2, .description = "F2" },
-        F3{ .vKey = VK_F3, .description = "F3" },
-        F4{ .vKey = VK_F4, .description = "F4" },
-        F5{ .vKey = VK_F5, .description = "F5" },
-        F6{ .vKey = VK_F6, .description = "F6" },
-        F7{ .vKey = VK_F7, .description = "F7" },
-        F8{ .vKey = VK_F8, .description = "F8" },
-        F9{ .vKey = VK_F9, .description = "F9" },
-        F10{ .vKey = VK_F10, .description = "F10" },
-        F11{ .vKey = VK_F11, .description = "F11" },
-        F12{ .vKey = VK_F12, .description = "F12" };
-    
+    DEFINE_KEY(Mouse1);
+    DEFINE_KEY(Mouse2);
+    DEFINE_KEY(Mouse3);
+    DEFINE_KEY(Mouse4);
+    DEFINE_KEY(Mouse5);
+
+    DEFINE_KEY(Minus);
+    DEFINE_KEY(Plus);
+    DEFINE_KEY(Tilde);
+
+    DEFINE_KEY(Insert);
+    DEFINE_KEY(Delete);
+    DEFINE_KEY(Home);
+    DEFINE_KEY(End);
+    DEFINE_KEY(PageUp);
+    DEFINE_KEY(PageDown);
+
+    DEFINE_KEY(F1);
+    DEFINE_KEY(F2);
+    DEFINE_KEY(F3);
+    DEFINE_KEY(F4);
+    DEFINE_KEY(F5);
+    DEFINE_KEY(F6);
+    DEFINE_KEY(F7);
+    DEFINE_KEY(F8);
+    DEFINE_KEY(F9);
+    DEFINE_KEY(F10);
+    DEFINE_KEY(F11);
+    DEFINE_KEY(F12);
+
     export constexpr std::optional<Key> from_string(std::string_view str)
     {
-#define CHECK_KEY(name)\
-        if (#name == str)\
-            return name
+#define CHECK_KEY(name) if (#name == str) return name
 
         CHECK_KEY(Mouse1);
         CHECK_KEY(Mouse2);

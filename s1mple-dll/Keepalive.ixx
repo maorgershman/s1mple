@@ -1,5 +1,6 @@
 export module Keepalive;
 
+import Config;
 import Keys;
 
 export class Keepalive
@@ -9,11 +10,11 @@ export class Keepalive
     static constexpr auto shouldDeload = "ShouldDeload";
     static constexpr auto delay = std::chrono::seconds(1);
 
-    static constexpr auto terminationKey = Keys::Insert;
-
 public:
     static void run()
     {
+        auto terminationKey = config.terminationKey;
+
         while (!terminationKey.is_currently_pressed())
         {
             HKEY hKey;
