@@ -13,39 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Modules">
-      <UniqueIdentifier>{202017fd-8c61-4443-af6a-aaed7315b4bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\nlohmann">
-      <UniqueIdentifier>{1277f259-459a-4c56-a2a8-e7ad455adbf4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="cpp.hint" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\main.cpp">
+    <ClCompile Include="src\dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\modules\Config.ixx">
-      <Filter>Source Files\Modules</Filter>
+    <ClCompile Include="src\Main.ixx">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\modules\Keepalive.ixx">
-      <Filter>Source Files\Modules</Filter>
+    <ClCompile Include="src\Keys.ixx">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\modules\Keys.ixx">
-      <Filter>Source Files\Modules</Filter>
+    <ClCompile Include="src\Console.ixx">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\modules\Utils.ixx">
-      <Filter>Source Files\Modules</Filter>
+    <ClCompile Include="src\Keepalive.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\testing_main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\includes.hpp">
+    <ClInclude Include="src\includes.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nlohmann\json.hpp">
-      <Filter>Header Files\nlohmann</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

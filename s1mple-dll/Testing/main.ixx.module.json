@@ -1,0 +1,12 @@
+{
+    "Version": "1.1",
+    "Data": {
+        "Source": "c:\\s1mple\\s1mple-dll\\src\\main.ixx",
+        "ProvidedModule": "Main",
+        "ImportedModules": [
+            "Console",
+            "Keepalive"
+        ],
+        "ImportedHeaderUnits": []
+    }
+}
