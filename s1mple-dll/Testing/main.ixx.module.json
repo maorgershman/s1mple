@@ -5,6 +5,7 @@
         "ProvidedModule": "Main",
         "ImportedModules": [
             "Console",
+            "Cheats",
             "Keepalive"
         ],
         "ImportedHeaderUnits": []

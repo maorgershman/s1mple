@@ -112,6 +112,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Cheats.ixx" />
     <ClCompile Include="src\Console.ixx" />
     <ClCompile Include="src\dllmain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -121,6 +122,7 @@
     <ClCompile Include="src\Keepalive.ixx" />
     <ClCompile Include="src\Main.ixx" />
     <ClCompile Include="src\Keys.ixx" />
+    <ClCompile Include="src\Offsets.ixx" />
     <ClCompile Include="src\testing_main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Testing|Win32'">false</ExcludedFromBuild>

@@ -335,6 +335,10 @@
                 "BMI": "C:\\s1mple\\s1mple-dll\\Testing\\Console.ixx.ifc"
             },
             {
+                "Name": "Cheats",
+                "BMI": "C:\\s1mple\\s1mple-dll\\Testing\\Cheats.ixx.ifc"
+            },
+            {
                 "Name": "Keepalive",
                 "BMI": "C:\\s1mple\\s1mple-dll\\Testing\\Keepalive.ixx.ifc"
             },

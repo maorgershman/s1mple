@@ -1,5 +1,8 @@
 module;
 
+#include <thread>
+#include <chrono>
+
 export module Console;
 
 export class Console 
@@ -34,9 +37,29 @@ public:
       return;
     }
 
+    if constexpr (isTesting)
+    {
+      exit_gracefully();
+    }
+
     std::cout << "Console is free!" << std::endl;
     FreeConsole();
 	}
+
+  void exit_gracefully() noexcept
+  {
+    if constexpr (isRelease)
+    {
+      return;
+    }
+
+    constexpr int timeout = 5;
+    for (int i = timeout; i > 0; i--)
+    {
+      std::cout << "Exiting in " << i << " seconds...\r";
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+    } 
+  }
 };
 
 
