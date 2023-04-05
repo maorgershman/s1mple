@@ -8,8 +8,8 @@ export module Console;
 export class Console 
 {
 public:
-	Console() noexcept
-	{
+  Console() noexcept
+  {
     if constexpr (isRelease) 
     {
       return;
@@ -28,10 +28,10 @@ public:
     freopen_s(&pStderr, "CON", "w", stderr);
 
     std::cout << "Console is ready!" << std::endl;
-	}
+  }
 
-	~Console() noexcept
-	{
+  ~Console() noexcept
+  {
     if constexpr (isRelease)
     {
       return;
@@ -44,9 +44,9 @@ public:
 
     std::cout << "Console is free!" << std::endl;
     FreeConsole();
-	}
+  }
 
-  void exit_gracefully() noexcept
+  void exit_gracefully() const noexcept
   {
     if constexpr (isRelease)
     {
