@@ -26,20 +26,20 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Testing|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -58,6 +58,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Testing|Win32'">
     <VcpkgConfiguration>Debug</VcpkgConfiguration>
+    <VcpkgTriplet>
+    </VcpkgTriplet>
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <VcpkgTriplet>
+    </VcpkgTriplet>
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <VcpkgTriplet>
+    </VcpkgTriplet>
+    <VcpkgUseStatic>true</VcpkgUseStatic>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -65,10 +78,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ForcedIncludeFiles>includes.hpp</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)src\include\includes.hpp</ForcedIncludeFiles>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -81,10 +95,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;TESTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ForcedIncludeFiles>includes.hpp</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)src\include\includes.hpp</ForcedIncludeFiles>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -99,10 +114,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>true</EnableModules>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ForcedIncludeFiles>includes.hpp</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)src\include\includes.hpp</ForcedIncludeFiles>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -113,8 +129,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Cheats.ixx" />
+    <ClCompile Include="src\cheats\BunnyHop.ixx" />
     <ClCompile Include="src\Console.ixx" />
-    <ClCompile Include="src\dllmain.cpp">
+    <ClCompile Include="src\entries\dllmain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Testing|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -123,14 +140,16 @@
     <ClCompile Include="src\Main.ixx" />
     <ClCompile Include="src\Keys.ixx" />
     <ClCompile Include="src\Offsets.ixx" />
-    <ClCompile Include="src\testing_main.cpp">
+    <ClCompile Include="src\entries\testing_main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Testing|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\Toggle.ixx" />
+    <ClCompile Include="src\Utils.ixx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\includes.hpp" />
+    <ClInclude Include="src\include\includes.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

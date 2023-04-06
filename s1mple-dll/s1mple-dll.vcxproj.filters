@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\dllmain.cpp">
+    <ClCompile Include="src\entries\dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Main.ixx">
@@ -30,7 +30,7 @@
     <ClCompile Include="src\Keepalive.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\testing_main.cpp">
+    <ClCompile Include="src\entries\testing_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Cheats.ixx">
@@ -39,9 +39,18 @@
     <ClCompile Include="src\Offsets.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\cheats\BunnyHop.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Toggle.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\includes.hpp">
+    <ClInclude Include="src\include\includes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

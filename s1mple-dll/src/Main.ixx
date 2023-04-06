@@ -9,22 +9,21 @@ import Keepalive;
 export void run() noexcept
 {
   Console console;
+  std::thread(Keepalive::run).detach();
 
   try 
   {
     Cheats::init();
   }
-  catch (const std::runtime_error& err)
+  catch (...)
   {
     if constexpr (isDebug)
     {
-      std::cerr << "Cheats::init() failed:" << std::endl;
-      std::cerr << err.what() << std::endl;
+      fputs("Main:run() failed!", stderr);
     }
 
     return;
   }
 
-  Keepalive keepalive;
-  keepalive.run();
+  Cheats::run();
 }

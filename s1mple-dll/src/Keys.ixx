@@ -33,6 +33,7 @@ export enum class VirtualKey : int
   F10 = VK_F10,
   F11 = VK_F11,
   F12 = VK_F12,
+  Space = VK_SPACE,
 };
 
 export struct Key
@@ -45,7 +46,12 @@ export struct Key
     return GetAsyncKeyState(static_cast<int>(vKey));
   }
 
-  Key operator=(const Key& key)
+  [[nodiscard]] bool is_activated() const noexcept
+  {
+    return GetKeyState(static_cast<int>(vKey));
+  }
+
+  Key operator=(const Key& key) const noexcept
   {
     return Key(key);
   }
@@ -86,6 +92,8 @@ namespace Keys
   DEFINE_KEY(F11);
   DEFINE_KEY(F12);
 
+  DEFINE_KEY(Space);
+
 #undef DEFINE_KEY
 
   export [[nodiscard]] std::optional<Key> from_string(std::string_view str) noexcept
@@ -119,6 +127,7 @@ namespace Keys
     CHECK_KEY(F10);
     CHECK_KEY(F11);
     CHECK_KEY(F12);
+    CHECK_KEY(Space);
 
 #undef CHECK_KEY
 

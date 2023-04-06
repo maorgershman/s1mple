@@ -3,7 +3,6 @@ module;
 #include <ShlObj.h>
 #include <thread>
 #include <chrono>
-#include <stdexcept>
 
 export module Keepalive;
 
@@ -11,37 +10,42 @@ import Keys;
 
 export class Keepalive
 {
-  static constexpr auto m_subkey = "Software\\s1mple";
-  static constexpr auto m_lastSeen = "LastSeen";
-  static constexpr auto m_shouldDeload = "ShouldDeload";
-  static constexpr auto m_delay = std::chrono::seconds(1);
-  static constexpr auto m_terminationKey = Keys::Insert;
+  static constexpr auto subkey = "Software\\s1mple";
+  static constexpr auto lastSeen = "LastSeen";
+  static constexpr auto shouldDeload = "ShouldDeload";
+  static constexpr auto delay = std::chrono::seconds(1);
+  static constexpr auto terminationKey = Keys::Insert;
 
-  HKEY m_hKey;
+  static HKEY hKey;
+  static std::atomic<bool> isAlive;
 
 public:
-  Keepalive() noexcept
+  static void run() noexcept
   {
-    const auto result = RegCreateKeyExA(HKEY_CURRENT_USER, m_subkey, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &m_hKey, NULL);
+    isAlive = true;
+
+    const auto result = RegCreateKeyExA(HKEY_CURRENT_USER, subkey, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hKey, NULL);
     if (result != ERROR_SUCCESS)
     {
-      m_hKey = nullptr;
-    }
-  }
-
-  void run() noexcept
-  {
-    while (!m_terminationKey.is_currently_pressed())
-    {
-      try 
+      if constexpr (isDebug)
       {
-        write_registry_qword( m_lastSeen, unix_time());
+        fputs("Keepalive::run() failed to open registry, continuing without it!", stderr);
+      }
 
-        bool shouldDeload = read_registry_qword(m_shouldDeload);
-        if (shouldDeload)
+      hKey = nullptr;
+    }
+
+    while (!terminationKey.is_currently_pressed())
+    {
+      try
+      {
+        write_registry_qword(lastSeen, unix_time());
+
+        auto b_shouldDeload = read_registry_qword(shouldDeload);
+        if (b_shouldDeload)
         {
-          shouldDeload = false;
-          write_registry_qword(m_shouldDeload, shouldDeload);
+          b_shouldDeload = false;
+          write_registry_qword(shouldDeload, b_shouldDeload);
 
           // Exit the loop, this will make the dll deload.
           break;
@@ -51,22 +55,24 @@ public:
       {
         if constexpr (isDebug)
         {
-          std::cerr << err.what() << std::endl;
+          fputs(err.what(), stderr);
         }
       }
 
-      std::this_thread::sleep_for(m_delay);
+      std::this_thread::sleep_for(delay);
     }
+
+    if (hKey != nullptr)
+    {
+      RegCloseKey(hKey);
+    }
+
+    isAlive = false;
   }
 
-  ~Keepalive() noexcept
+  [[nodiscard]] static bool is_alive() noexcept
   {
-    if (m_hKey == nullptr)
-    {
-      return;
-    }
-
-    RegCloseKey(m_hKey);
+    return isAlive;
   }
 
 private:
@@ -78,28 +84,41 @@ private:
     return unixTime;
   }
 
-  void write_registry_qword(std::string_view valueName, uint64_t value)
+  static void write_registry_qword(std::string_view valueName, uint64_t value)
   {
-    const auto result = RegSetValueExA(m_hKey, valueName.data(), 0, REG_QWORD, (BYTE*)&value, sizeof(value));
+    const auto result = RegSetValueExA(hKey, valueName.data(), 0, REG_QWORD, (BYTE*)&value, sizeof(value));
     if (result != ERROR_SUCCESS)
     {
-      throw std::runtime_error("RegSetValueExA has failed!");
+      if constexpr (isDebug)
+      {
+        fputs(std::format("Keepalive::write_registry_qword({}, {}) failed!", valueName, value).c_str(), stderr);
+      }
+
+      throw std::exception();
     }
   }
 
-  [[nodiscard]] uint64_t read_registry_qword(std::string_view valueName)
+  static [[nodiscard]] uint64_t read_registry_qword(std::string_view valueName)
   {
     uint64_t dwVal = 0;
 
     DWORD dwType = REG_QWORD;
     DWORD dwCbData = sizeof(dwVal);
 
-    const auto result = RegQueryValueExA(m_hKey, valueName.data(), NULL, &dwType, (LPBYTE)&dwVal, &dwCbData);
+    const auto result = RegQueryValueExA(hKey, valueName.data(), NULL, &dwType, (LPBYTE)&dwVal, &dwCbData);
     if (result != ERROR_SUCCESS)
     {
-      return -1;
+      if constexpr (isDebug)
+      {
+        fputs(std::format("Keepalive::read_registry_qword({}) failed!", valueName).c_str(), stderr);
+      }
+
+      throw std::exception();
     }
 
     return dwVal;
   }
 };
+
+HKEY Keepalive::hKey;
+std::atomic<bool> Keepalive::isAlive = true;

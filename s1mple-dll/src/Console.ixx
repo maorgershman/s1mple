@@ -27,7 +27,7 @@ public:
     FILE* pStderr;
     freopen_s(&pStderr, "CON", "w", stderr);
 
-    std::cout << "Console is ready!" << std::endl;
+    puts("Console is ready!");
   }
 
   ~Console() noexcept
@@ -42,7 +42,7 @@ public:
       exit_gracefully();
     }
 
-    std::cout << "Console is free!" << std::endl;
+    puts("Console is free!");
     FreeConsole();
   }
 

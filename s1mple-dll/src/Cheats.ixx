@@ -2,26 +2,48 @@ module;
 
 export module Cheats;
 
+import Keepalive;
 import Offsets;
+import Utils;
 
-export class Cheats 
+import BunnyHop;
+
+export namespace Cheats
 {
-public:
-  static void init()
+  export void init()
   {
     try
     {
       Offsets::load();
     }
-    catch (const std::runtime_error& err)
+    catch (const std::exception& ex)
     {
       if constexpr (isDebug)
       {
-        std::cerr << "Offsets::init() failed:" << std::endl;
-        std::cerr << err.what() << std::endl;
+        fputs("Cheats::init() failed!", stderr);
       }
 
-      throw err;
+      throw ex;
+    }
+  }
+
+  export void run() noexcept
+  {
+    while (Keepalive::is_alive())
+    {
+      BunnyHop::tick();
+
+      if (!is_mouse_cursor_hidden())
+      {
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      }
+      else
+      {
+        if constexpr (isDebug)
+        {
+          std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
+      }
     }
   }
 };
